@@ -271,14 +271,21 @@ def optimize_board(level, champions):
 
 if __name__ == "__main__":
     f = open("combinations.txt", "w")
+    level_traitcount = {}
     for level in range(3, 7):
         combination, traits = max_active_traits(level)
         for board in combination:
+            level_traitcount[level] = traits
             f.write(f"Level {level}: {traits} active traits with combination {board}\n")
     for level in range(7, 10):
         optimized_board, optimized_traits_count = optimize_board(level, champions)
         for board in optimized_board:
+            level_traitcount[level] = optimized_traits_count
             f.write(f"Level {level}: {optimized_traits_count} active traits with combination {board}\n")
 
+    f.flush()
+    f.close()
+    f = open("level_traitcount.txt", "w")
+    f.write(str(level_traitcount))
     f.flush()
     f.close()
